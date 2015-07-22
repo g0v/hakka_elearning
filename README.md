@@ -18,6 +18,7 @@
   * 102年版教材
   * [xls](http://wiki.hakka.gov.tw/download-word.aspx)
   * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>,N>=83775
+    * N=72343也有東西
   
   
 ##安裝
