@@ -16,5 +16,15 @@
 * 臺灣客話詞彙資料庫
   * xls、HTML和mp3
   * 102年版教材
-  * [xls]http://wiki.hakka.gov.tw/download-word.aspx
-  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>,N>=83775 
+  * [xls](http://wiki.hakka.gov.tw/download-word.aspx)
+  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>,N>=83775
+  
+  
+##安裝
+```
+sudo apt-get install -y python-virtualenv g++ libxml2-dev libxslt-dev python-dev
+virtualenv --python=python3 venv
+. venv/bin/activate
+pip install -r requirements.txt
+```
+  
