@@ -14,6 +14,7 @@
   * [初級](http://elearning.hakka.gov.tw/Kaga/wikiwords1.aspx)
   * [中高級](http://elearning.hakka.gov.tw/Kaga/wikiwords2.aspx)
 * 臺灣客話詞彙資料庫
-  * xls
-  * 可能是102年版
-  * <http://wiki.hakka.gov.tw/download-word.aspx> 
+  * xls、HTML和mp3
+  * 102年版教材
+  * [xls]http://wiki.hakka.gov.tw/download-word.aspx
+  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>,N>=83775 
