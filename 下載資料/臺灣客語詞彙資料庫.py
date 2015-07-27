@@ -64,7 +64,8 @@ class 臺灣客語詞彙資料庫:
                 print(這馬編號)
                 try:
                     with urlopen(self.詞條網址.format(這馬編號), timeout=100) as 網頁資料:
-                        網頁結構 = BeautifulSoup(網頁資料.read().decode('utf-8'), 'lxml')
+                        網頁結構 = BeautifulSoup(
+                            網頁資料.read().decode('utf-8'), 'lxml')
                         資料table = 網頁結構.find_all(
                             id='ctl00_ContentPlaceHolder1_FormView1')[0].find('table')
                         if 資料table is None:
@@ -94,8 +95,8 @@ class 臺灣客語詞彙資料庫:
                             )['value'].split('=', 1)[1]
                             print(資料)
                             資料檔案.writerow(資料)
-                except:
-                    pass
+                except Exception as 錯誤:
+                    print(錯誤)
                 else:
                     這馬編號 += 1
 
