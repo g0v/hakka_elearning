@@ -63,42 +63,50 @@ class 臺灣客語詞彙資料庫:
             while 連紲無效的數量 < 100000:
                 print(這馬編號)
                 try:
-                    with urlopen(self.詞條網址.format(這馬編號), timeout=100) as 網頁資料:
-                        網頁結構 = BeautifulSoup(
-                            網頁資料.read().decode('utf-8'), 'lxml')
-                        資料table = 網頁結構.find_all(
-                            id='ctl00_ContentPlaceHolder1_FormView1')[0].find('table')
-                        if 資料table is None:
-                            連紲無效的數量 += 1
-                        else:
-                            連紲無效的數量 = 0
-                            表格資料 = []
-                            for tr in 資料table.find_all('tr', recursive=False):
-                                表格資料.append(tr.find_all('td', recursive=False))
-                            資料 = {}
-                            資料['編號'] = str(這馬編號)
-                            資料['客家語言'] = 表格資料[0][1].get_text().strip()
-                            資料['等級'] = 表格資料[0][2].get_text().strip()
-                            資料['腔調'] = 表格資料[2][1].find(
-                                "input", {'checked': "checked"}
-                            ).find_next_sibling('label').get_text().strip()
-                            資料['客語音標'] = 表格資料[1][1].get_text().strip()
-                            資料['華語辭義(限100字)'] = 表格資料[3][1].get_text().strip()
-                            資料['英語詞義(限200字)'] = 表格資料[4][1].get_text().strip()
-                            資料['客語音檔網址'] = 表格資料[1][2].find(
-                                "param", {'name': 'FlashVars'}
-                            )['value'].split('=', 1)[1]
-                            資料['客語例句'] = 表格資料[5][1].get_text().strip()
-                            資料['華語翻譯'] = 表格資料[6][1].get_text().strip()
-                            資料['客語例句網址'] = 表格資料[5][2].find(
-                                "param", {'name': 'FlashVars'}
-                            )['value'].split('=', 1)[1]
-                            print(資料)
-                            資料檔案.writerow(資料)
+                    資料=self.下載網頁詞條(這馬編號)
+                    if 資料 is None:
+                        連紲無效的數量 += 1
+                    else:
+                        連紲無效的數量 = 0
+                        資料檔案.writerow(資料)
                 except Exception as 錯誤:
                     print(錯誤)
                 else:
                     這馬編號 += 1
+
+    def 下載網頁詞條(self, 編號):
+        with urlopen(self.詞條網址.format(編號), timeout=100) as 網頁資料:
+            網頁結構 = BeautifulSoup(
+                網頁資料.read().decode('utf-8'), 'lxml')
+        資料table = 網頁結構.find_all(
+            id='ctl00_ContentPlaceHolder1_FormView1')[0].find('table')
+        if 資料table is None:
+            return None
+        表格資料 = []
+        for tr in 資料table.find_all('tr', recursive=False):
+            表格資料.append(tr.find_all('td', recursive=False))
+        資料 = {}
+        資料['編號'] = str(編號)
+        資料['客家語言'] = 表格資料[0][1].get_text().strip()
+        資料['等級'] = 表格資料[0][2].get_text().strip()
+        try:
+            資料['腔調'] = 表格資料[2][1].find(
+                "input", {'checked': "checked"}
+            ).find_next_sibling('label').get_text().strip()
+        except AttributeError:
+            pass
+        資料['客語音標'] = 表格資料[1][1].get_text().strip()
+        資料['華語辭義(限100字)'] = 表格資料[3][1].get_text().strip()
+        資料['英語詞義(限200字)'] = 表格資料[4][1].get_text().strip()
+        資料['客語音檔網址'] = 表格資料[1][2].find(
+            "param", {'name': 'FlashVars'}
+        )['value'].split('=', 1)[1]
+        資料['客語例句'] = 表格資料[5][1].get_text().strip()
+        資料['華語翻譯'] = 表格資料[6][1].get_text().strip()
+        資料['客語例句網址'] = 表格資料[5][2].find(
+            "param", {'name': 'FlashVars'}
+        )['value'].split('=', 1)[1]
+        return 資料
 
 if __name__ == '__main__':
     詞彙資料庫 = 臺灣客語詞彙資料庫()
