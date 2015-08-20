@@ -21,11 +21,12 @@
     * N=72343也有東西
   
   
-##安裝
+## 下載語料
 ```
 sudo apt-get install -y python-virtualenv g++ libxml2-dev libxslt-dev python-dev
 virtualenv --python=python3 venv
 . venv/bin/activate
 pip install -r requirements.txt
+python 下載資料/臺灣客語詞彙資料庫.py 
 ```
   
