@@ -17,8 +17,7 @@
   * xls、HTML和mp3
   * 102年版教材
   * [xls](http://wiki.hakka.gov.tw/download-word.aspx)
-  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>,N>=83775
-    * N=72343也有東西
+  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>, 72338<=N<=118502
   
   
 ## 下載語料
@@ -29,4 +28,10 @@ virtualenv --python=python3 venv
 pip install -r requirements.txt
 python 下載資料/臺灣客語詞彙資料庫.py 
 ```
-  
+
+* `合併/原始.csv`是合併臺灣客話詞彙資料庫全部的xls
+* `合併/網站詞目.csv`是臺灣客話詞彙資料庫網頁上的資料
+
+兩個檔除了少部份（14條）詞目不同外，`合併/網站詞目.csv`多包含外來語。
+
+針對`合併/網站詞目.csv`處理造字，並轉出`網站詞目補造字.csv`。

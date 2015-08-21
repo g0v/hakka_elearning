@@ -1,3 +1,5 @@
+import re
+
 
 class 造字表:
 
@@ -81,4 +83,7 @@ class 造字表:
         "\ue130": "䱻",
         "\ue134": "𪘒",
     }
-    
+    _換造字 = re.compile('|'.join(內碼對應表.keys()))
+
+    def 換造字(self, 語句):
+        return self._換造字.sub(lambda 物件: self.內碼對應表[物件.group(0)], 語句)

@@ -1,10 +1,12 @@
 from bs4 import BeautifulSoup
-from csv import DictWriter
+from csv import DictWriter, DictReader
+import html
 from os import makedirs, listdir
 from os.path import join, dirname, abspath, basename
 from urllib.parse import urljoin, quote
 from urllib.request import urlopen
 from xlrd import open_workbook
+from 資料整理.造字表 import 造字表
 
 
 class 臺灣客語詞彙資料庫:
@@ -16,6 +18,7 @@ class 臺灣客語詞彙資料庫:
         self.原始檔資料夾 = join(self.專案目錄, 'raw')
         self.合併原始csv = join(self.專案目錄, '合併', '原始.csv')
         self.合併網址csv = join(self.專案目錄, '合併', '網站詞目.csv')
+        self.補造字網址csv = join(self.專案目錄, '合併', '網站詞目補造字.csv')
 
     def 下載xls(self):
         makedirs(self.原始檔資料夾, exist_ok=True)
@@ -63,7 +66,7 @@ class 臺灣客語詞彙資料庫:
             while 連紲無效的數量 < 100000:
                 print(這馬編號)
                 try:
-                    資料=self.下載網頁詞條(這馬編號)
+                    資料 = self.下載網頁詞條(這馬編號)
                     if 資料 is None:
                         連紲無效的數量 += 1
                     else:
@@ -108,8 +111,32 @@ class 臺灣客語詞彙資料庫:
         )['value'].split('=', 1)[1]
         return 資料
 
+    def 原始和網站csv合併(self):
+        self.合併原始csv = join(self.專案目錄, '合併', '原始.csv')
+        欄位名 = [
+            '編號', '客家語言', '等級', '腔調', '客語音標',
+            '華語辭義(限100字)', '英語詞義(限200字)', '客語音檔網址',
+            '客語例句', '華語翻譯', '客語例句網址',
+        ]
+        造字 = 造字表()
+        with open(self.補造字網址csv, 'w') as 輸出:
+            資料檔案 = DictWriter(輸出, fieldnames=欄位名)
+            資料檔案.writeheader()
+            with open(self.合併網址csv) as 輸入:
+                for 一筆 in DictReader(輸入):
+                    資料 = {}
+                    for 欄位, 內容 in 一筆.items():
+                        資料[欄位] = html.unescape(
+                            造字.換造字(
+                                內容
+                            )
+                        )
+                    資料檔案.writerow(資料)
+
+
 if __name__ == '__main__':
     詞彙資料庫 = 臺灣客語詞彙資料庫()
     詞彙資料庫.下載xls()
     詞彙資料庫.xls合做一隻csv()
     詞彙資料庫.下載網頁詞條而且合做一隻csv()
+    詞彙資料庫.原始和網站csv合併()
