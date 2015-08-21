@@ -294,3 +294,11 @@ class 漢字音標處理(TestCase):
                 ('毋單淨…還', 'm danˋ ciang+ … han'),
             ]
         )
+
+    def test_多的符號要拿掉(self):
+        self.整理(
+            ('發', 'bod  hab'),
+            [
+                ('發', 'bod hab'),
+            ]
+        )
