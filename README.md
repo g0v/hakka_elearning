@@ -1,6 +1,11 @@
 # 客語能力認證資料檔
 
 ## 資料來源
+* 臺灣客話詞彙資料庫
+  * xls、HTML和mp3
+  * 102年版教材
+  * [xls](http://wiki.hakka.gov.tw/download-word.aspx)
+  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>, 72338<=N<=118502
 * 哈客網路學院教材
   * PDF檔和mp3
     * 每個mp3檔有10句語料
@@ -13,11 +18,6 @@
   * 102年版
   * [初級](http://elearning.hakka.gov.tw/Kaga/wikiwords1.aspx)
   * [中高級](http://elearning.hakka.gov.tw/Kaga/wikiwords2.aspx)
-* 臺灣客話詞彙資料庫
-  * xls、HTML和mp3
-  * 102年版教材
-  * [xls](http://wiki.hakka.gov.tw/download-word.aspx)
-  * html跟mp3：<http://wiki.hakka.gov.tw/search-detail.aspx?param=N>, 72338<=N<=118502
   
   
 ## 下載語料
@@ -35,3 +35,24 @@ python 下載資料/臺灣客語詞彙資料庫.py
 兩個檔除了少部份（14條）詞目不同外，`合併/網站詞目.csv`多包含外來語。
 
 針對`合併/網站詞目.csv`處理造字，並轉出`網站詞目補造字.csv`。
+
+## 匯入資料庫
+在使用`臺灣言語資料庫`的專案目錄下
+```bash
+git clone https://github.com/g0v/hakka_elearning.git
+sudo apt-get install -y python3 python-virtualenv
+virtualenv --python=python3 venv
+. venv/bin/activate
+pip install -r requirements.txt
+echo "from 轉到臺灣言語資料庫.整合到資料庫 import 走 ; 走()" | PYTHONPATH=hakka_elearning python manage.py shell
+```
+
+## 開發試驗
+在`hakka_elearning`專案目錄下
+```
+sudo apt-get install -y python-virtualenv g++ libxml2-dev libxslt-dev python-dev
+virtualenv --python=python3 venv
+. venv/bin/activate
+python -m unittest 
+```
+
