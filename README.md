@@ -22,7 +22,7 @@
   
 ## 下載語料
 ```
-sudo apt-get install -y python-virtualenv g++ libxml2-dev libxslt-dev python-dev
+sudo apt-get install -y python3 python-virtualenv g++ libxml2-dev libxslt-dev python-dev
 virtualenv --python=python3 venv
 . venv/bin/activate
 pip install -r requirements.txt
@@ -36,7 +36,7 @@ python 下載資料/臺灣客語詞彙資料庫.py
 
 針對`合併/網站詞目.csv`處理造字，並轉出`網站詞目補造字.csv`。
 
-## 匯入資料庫
+## 產生資料庫格式
 在使用`臺灣言語資料庫`的專案目錄下
 ```bash
 git clone https://github.com/g0v/hakka_elearning.git
@@ -44,7 +44,7 @@ sudo apt-get install -y python3 python-virtualenv
 virtualenv --python=python3 venv
 . venv/bin/activate
 pip install -r requirements.txt
-echo "from 轉到臺灣言語資料庫.整合到資料庫 import 走 ; 走()" | PYTHONPATH=hakka_elearning python manage.py shell
+python 轉到臺灣言語 資料庫/整合到資料庫.py
 ```
 
 ## 開發試驗
