@@ -39,12 +39,17 @@ python 下載資料/臺灣客語詞彙資料庫.py
 ## 產生資料庫格式
 在使用`臺灣言語資料庫`的專案目錄下
 ```bash
-git clone https://github.com/g0v/hakka_elearning.git
 sudo apt-get install -y python3 python-virtualenv
 virtualenv --python=python3 venv
 . venv/bin/activate
 pip install -r requirements.txt
-python 轉到臺灣言語 資料庫/整合到資料庫.py
+python 轉到臺灣言語資料庫/整合到資料庫.py
+```
+會產生`臺灣客話詞彙資料庫語料.yaml`語料檔
+
+## 匯入臺灣言語資料庫
+```bash
+python manage.py 匯入資料 https://Taiwanese-Corpus.github.io/hakka_elearning/臺灣客話詞彙資料庫語料.yaml
 ```
 
 ## 開發試驗
